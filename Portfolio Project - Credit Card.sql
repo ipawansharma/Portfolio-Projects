@@ -1,13 +1,14 @@
-/*
-Skills used: Joins, CTE's, Sub-Queries, Windows Functions, Aggregate Functions, Converting Data Types
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------Skills used: Joins, CTE's, Sub-Queries, Windows Functions, Aggregate Functions, Converting Data Types--------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 The data is related to the credit card transactions in India from between 2013 and 2015.
-Table:
-credit_card_transactions(transaction_id,city,transaction_date,card_type,exp_type,gender,amount) 
+Table: credit_card_transactions(transaction_id,city,transaction_date,card_type,exp_type,gender,amount) 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1- Write a query to print top 5 cities with highest spends and their percentage contribution of total 
-credit card spends.
-*/
+
+--1- Write a query to print top 5 cities with highest spends and their percentage contribution of total credit card spends.
 
 WITH CTE1 AS (
 SELECT city,
@@ -23,9 +24,8 @@ FROM CTE1 INNER JOIN CTE2
 ON 1=1
 ORDER BY percent_spend DESC;
 
-/*
-2- Write a query to print highest spend month and amount spent in that month for each card type.
-*/
+
+--2- Write a query to print highest spend month and amount spent in that month for each card type.
 
 WITH total_spend AS (
 SELECT card_type
@@ -40,9 +40,10 @@ FROM (SELECT *
 FROM total_spend)a
 WHERE ranking=1;
 
+
 /*
-3- Write a query to print the transaction details(all columns from the table) for each card type when 
-it reaches a cumulative of 1000000 total spends(We should have 4 rows in the o/p one for each card type.
+3- Write a query to print the transaction details(all columns from the table) for each card type when it reaches a cumulative of 1000000 total spends
+(We should have 4 rows in the o/p one for each card type.
 */
 
 WITH agg_data AS (
@@ -53,6 +54,7 @@ SELECT *
 FROM ( SELECT *,DENSE_RANK() OVER(PARTITION BY card_type ORDER BY rolling_sum) AS ranking
 FROM agg_data WHERE rolling_sum>1000000) a
 WHERE ranking=1;
+
 
 --4- Write a query to find city which had lowest percentage spend for gold card type.
 
@@ -68,10 +70,8 @@ GROUP BY city
 HAVING COUNT(gold_amount)>0
 ORDER BY ratio;
 
-/*
-5- Write a query to print 3 columns:  city, highest_expense_type , lowest_expense_type 
-(example format : Delhi , bills, Fuel)
-*/
+
+--5- Write a query to print 3 columns:  city, highest_expense_type , lowest_expense_type (example format : Delhi , bills, Fuel)
 
 WITH agg_data AS (
 SELECT city,exp_type,SUM(amount) AS amount
@@ -88,6 +88,7 @@ SELECT city
 FROM rank_data
 GROUP BY city;
 
+
 --6- Write a query to find percentage contribution of spends by females for each expense type.
 
 WITH agg_data AS (
@@ -100,6 +101,7 @@ SELECT *
 ,100.0*(total_spend-females_spend)/total_spend AS females_spend_percentage
 FROM agg_data
 ORDER BY females_spend_percentage DESC;
+
 
 --7- Which card and expense type combination saw highest month over month growth in Jan-2014.
 
@@ -118,6 +120,7 @@ FROM rolling_data
 WHERE pvs_amount IS NOT NULL AND yr=2014 AND mnth=1
 ORDER BY mom_growth DESC;
 
+
 --8-- During weekends which city has highest total spend to total no of transcations ratio.
 SELECT TOP 1 city,sum(amount)*1.0/count(1) AS spend
 FROM credit_card_transactions
@@ -125,10 +128,8 @@ WHERE DATENAME(WEEKDAY,transaction_date) IN ('Saturday','Sunday')
 GROUP BY city
 ORDER BY spend DESC;
 
-/*
-9--Which city took least number of days to reach its 500th transaction after the first transaction 
-in that city
-*/
+
+9--Which city took least number of days to reach its 500th transaction after the first transaction in that city
 
 WITH CTE1 AS (
 SELECT *
