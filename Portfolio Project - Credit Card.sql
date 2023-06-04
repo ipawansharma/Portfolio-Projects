@@ -2,8 +2,8 @@
 ---------------------------------------Skills used: Joins, CTE's, Sub-Queries, Windows Functions, Aggregate Functions, Converting Data Types--------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-The data is related to the credit card transactions in India from between 2013 and 2015.
-Table: credit_card_transactions(transaction_id,city,transaction_date,card_type,exp_type,gender,amount) 
+--The data is related to the credit card transactions in India from between 2013 and 2015.
+--Table: credit_card_transactions(transaction_id,city,transaction_date,card_type,exp_type,gender,amount) 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
